@@ -11,17 +11,19 @@ app.use(express.json());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicPath = path.join(__dirname, 'public');
 
-// 3️⃣ Serve other static assets (CSS, JS, etc.)
-app.use(express.static(publicPath));
-
-// 2️⃣ Set header **only when serving HTML**
-app.get('/', (req, res) => {
+// 2️⃣ Set Permissions-Policy header for all responses
+app.use((req, res, next) => {
   res.setHeader("Permissions-Policy", "browsing-topics=(self)");
-  res.sendFile(path.join(publicPath, 'index.html'));
+  next();
 });
 
-// 3️⃣ Serve other static assets (CSS, JS, etc.)
+// 3️⃣ Serve static assets (CSS, JS, etc.)
 app.use(express.static(publicPath));
+
+// 4️⃣ Serve main HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 // 4️⃣ Track endpoint
 app.post('/collect', (req, res) => {

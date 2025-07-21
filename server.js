@@ -13,7 +13,7 @@ const publicPath = path.join(__dirname, 'public');
 
 // 2️⃣ Set Permissions-Policy header for all responses
 app.use((req, res, next) => {
-  res.setHeader("Permissions-Policy", "browsing-topics=(self)");
+  res.setHeader("Permissions-Policy", 'browsing-topics=("https://topics-api-oofp.vercel.app")');
   next();
 });
 

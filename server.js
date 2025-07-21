@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { fsync } from 'fs';
 
 const app = express();
 app.use(cors());
@@ -41,6 +40,13 @@ app.get("/script", (req, res) => {
 });
 // 5️⃣ Start
 const PORT = process.env.PORT || 3044;
-app.listen(PORT, () => {
-  console.log(`🟢  Topics playground running at http://localhost:${PORT}`);
-});
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🟢  Topics playground running at http://localhost:${PORT}`);
+  });
+}
+
+// Export for Vercel
+export default app;

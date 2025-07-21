@@ -11,15 +11,15 @@ app.use(express.json());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicPath = path.join(__dirname, 'public');
 
-// // 2️⃣ Set header **only when serving HTML**
-// app.get('/', (req, res) => {
-//   res.setHeader("Permissions-Policy", "browsing-topics=(self)");
-//   res.sendFile(path.join(publicPath, 'index.html'));
-// });
-// app.use((req, res, next) => {
-//     res.append('Permissions-Policy', 'browsing-topics=()');
-//     next();
-// });
+// 3️⃣ Serve other static assets (CSS, JS, etc.)
+app.use(express.static(publicPath));
+
+// 2️⃣ Set header **only when serving HTML**
+app.get('/', (req, res) => {
+  res.setHeader("Permissions-Policy", "browsing-topics=(self)");
+  res.sendFile(path.join(publicPath, 'index.html'));
+});
+
 // 3️⃣ Serve other static assets (CSS, JS, etc.)
 app.use(express.static(publicPath));
 
